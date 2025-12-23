@@ -19,6 +19,12 @@ include "llvm/Target/Target.td"
 include "QuaggaRegisterInfo.td"
 
 //===----------------------------------------------------------------------===//
+// Subtarget Features & Processors
+//===----------------------------------------------------------------------===//
+
+include "QuaggaProcessors.td"
+
+//===----------------------------------------------------------------------===//
 // Calling Convention Description
 //===----------------------------------------------------------------------===//
 
@@ -29,6 +35,8 @@ include "QuaggaCallingConv.td"
 //===----------------------------------------------------------------------===//
 
 include "QuaggaInstrInfo.td"
+
+defm : RemapAllTargetPseudoPointerOperands<GRRegs>;
 
 def QuaggaInstrInfo : InstrInfo;
 

@@ -7,6 +7,7 @@
 //===----------------------------------------------------------------------===//
 
 #include "QuaggaInstPrinter.h"
+#include "llvm/MC/MCAsmInfo.h"
 #include "llvm/MC/MCExpr.h"
 #include "llvm/MC/MCInst.h"
 #include "llvm/MC/MCSymbol.h"
@@ -26,7 +27,7 @@ void QuaggaInstPrinter::printInst(const MCInst *MI, uint64_t Address,
   printAnnotation(O, Annot);
 }
 
-void QuaggaInstPrinter::printRegName(raw_ostream &O, MCRegister Reg) const {
+void QuaggaInstPrinter::printRegName(raw_ostream &O, MCRegister Reg) {
   O << getRegisterName(Reg);
 }
 
@@ -44,5 +45,5 @@ void QuaggaInstPrinter::printOperand(const MCInst *MI, unsigned OpNo,
   }
 
   assert(Op.isExpr() && "unknown operand kind in printOperand");
-  Op.getExpr()->print(O, &MAI);
+  MAI.printExpr(O, *Op.getExpr());
 }

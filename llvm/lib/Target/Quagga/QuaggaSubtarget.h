@@ -24,6 +24,10 @@ public:
                   const TargetMachine &TM);
 
   void ParseSubtargetFeatures(StringRef CPU, StringRef TuneCPU, StringRef FS);
+
+  const TargetRegisterInfo *getRegisterInfo() const override { return nullptr; }
+  const TargetInstrInfo *getInstrInfo() const override { return nullptr; }
+  const TargetFrameLowering *getFrameLowering() const override { return nullptr; }
 };
 
 } // end namespace llvm

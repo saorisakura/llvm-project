@@ -23,8 +23,8 @@ public:
   ~QuaggaELFObjectWriter() override = default;
 
 protected:
-  unsigned getRelocType(MCContext &Ctx, const MCValue &Target,
-                        const MCFixup &Fixup, bool IsPCRel) const override {
+  unsigned getRelocType(const MCFixup &Fixup, const MCValue &Target,
+                        bool IsPCRel) const override {
     return 0;
   }
 };

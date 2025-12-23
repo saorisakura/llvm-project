@@ -18,10 +18,19 @@ class QuaggaInst<dag outs, dag ins, string asmstr, list<dag> pattern>
   dag InOperandList = ins;
   let AsmString = asmstr;
   let Pattern = pattern;
+  
+  field bits<32> Inst;
+  field bits<32> SoftFail = 0;
 }
 
 // Pseudo Instructions
 class Pseudo<dag outs, dag ins, list<dag> pattern>
     : QuaggaInst<outs, ins, "", pattern> {
   let isPseudo = 1;
+  let isCodeGenOnly = 1;
+}
+
+// Define a simple NOP instruction
+def NOP : QuaggaInst<(outs), (ins), "nop", []> {
+  let Inst{31-0} = 0;
 }

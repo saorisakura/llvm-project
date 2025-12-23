@@ -10,7 +10,6 @@
 #include "llvm/MC/MCAsmBackend.h"
 #include "llvm/MC/MCAssembler.h"
 #include "llvm/MC/MCELFObjectWriter.h"
-#include "llvm/MC/MCFixupKindInfo.h"
 #include "llvm/MC/MCObjectWriter.h"
 #include "llvm/MC/MCSubtargetInfo.h"
 #include "llvm/Support/EndianStream.h"
@@ -22,30 +21,26 @@ class QuaggaAsmBackend : public MCAsmBackend {
 public:
   QuaggaAsmBackend(const Target &T) : MCAsmBackend(llvm::endianness::little) {}
 
-  void applyFixup(const MCAssembler &Asm, const MCFixup &Fixup,
-                  const MCValue &Target, MutableArrayRef<char> Data,
-                  uint64_t Value, bool IsResolved,
-                  const MCSubtargetInfo *STI) const override {}
+  void applyFixup(const MCFragment &, const MCFixup &, const MCValue &Target,
+                  uint8_t *Data, uint64_t Value, bool IsResolved) override {}
 
   std::unique_ptr<MCObjectTargetWriter>
   createObjectTargetWriter() const override {
     return createQuaggaELFObjectWriter(0);
   }
 
-  unsigned getNumFixupKinds() const override { return 1; }
-
   std::optional<MCFixupKind> getFixupKind(StringRef Name) const override {
     return std::nullopt;
   }
 
-  const MCFixupKindInfo &getFixupKindInfo(MCFixupKind Kind) const override {
+  MCFixupKindInfo getFixupKindInfo(MCFixupKind Kind) const override {
     const static MCFixupKindInfo Infos[1] = {
         {"fixup_quagga_none", 0, 32, 0}};
 
     if (Kind < FirstTargetFixupKind)
       return MCAsmBackend::getFixupKindInfo(Kind);
 
-    assert(unsigned(Kind - FirstTargetFixupKind) < getNumFixupKinds() &&
+    assert(unsigned(Kind - FirstTargetFixupKind) < 1 &&
            "Invalid kind!");
     return Infos[Kind - FirstTargetFixupKind];
   }

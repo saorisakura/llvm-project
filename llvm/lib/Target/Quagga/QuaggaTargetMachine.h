@@ -10,11 +10,12 @@
 #define LLVM_LIB_TARGET_QUAGGA_QUAGGATARGETMACHINE_H
 
 #include "QuaggaSubtarget.h"
-#include "llvm/Target/TargetMachine.h"
+#include "llvm/CodeGen/CodeGenTargetMachineImpl.h"
+#include <optional>
 
 namespace llvm {
 
-class QuaggaTargetMachine : public LLVMTargetMachine {
+class QuaggaTargetMachine : public CodeGenTargetMachineImpl {
   std::unique_ptr<TargetLoweringObjectFile> TLOF;
   QuaggaSubtarget Subtarget;
 

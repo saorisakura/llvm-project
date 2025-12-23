@@ -9,6 +9,7 @@
 #include "QuaggaMCTargetDesc.h"
 #include "QuaggaInstPrinter.h"
 #include "TargetInfo/QuaggaTargetInfo.h"
+#include "llvm/MC/MCAsmInfoELF.h"
 #include "llvm/MC/MCInstrInfo.h"
 #include "llvm/MC/MCRegisterInfo.h"
 #include "llvm/MC/MCSubtargetInfo.h"
@@ -47,9 +48,7 @@ static MCSubtargetInfo *createQuaggaMCSubtargetInfo(const Triple &TT,
 static MCAsmInfo *createQuaggaMCAsmInfo(const MCRegisterInfo &MRI,
                                         const Triple &TT,
                                         const MCTargetOptions &Options) {
-  MCAsmInfo *MAI = new MCAsmInfo();
-  MAI->setCodePointerSize(4);
-  return MAI;
+  return nullptr;
 }
 
 static MCInstPrinter *createQuaggaMCInstPrinter(const Triple &T,

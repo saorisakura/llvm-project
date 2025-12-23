@@ -19,8 +19,3 @@ using namespace llvm;
 QuaggaSubtarget::QuaggaSubtarget(const Triple &TT, StringRef CPU,
                                  StringRef FS, const TargetMachine &TM)
     : QuaggaGenSubtargetInfo(TT, CPU, /*TuneCPU*/ CPU, FS) {}
-
-void QuaggaSubtarget::ParseSubtargetFeatures(StringRef CPU, StringRef TuneCPU,
-                                             StringRef FS) {
-  ParseSubtargetFeatures(CPU, TuneCPU, FS);
-}
