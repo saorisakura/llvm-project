@@ -88,6 +88,7 @@ StringRef Triple::getArchTypeName(ArchType Kind) {
   case x86_64:         return "x86_64";
   case xcore:          return "xcore";
   case xtensa:         return "xtensa";
+  case quagga:         return "quagga";
   }
 
   llvm_unreachable("Invalid ArchType!");
@@ -257,6 +258,8 @@ StringRef Triple::getArchTypePrefix(ArchType Kind) {
   case dxil:        return "dx";
 
   case xtensa:      return "xtensa";
+
+  case quagga:      return "quagga";
   }
 }
 
@@ -510,6 +513,7 @@ Triple::ArchType Triple::getArchTypeForLLVMName(StringRef Name) {
       .Case("loongarch64", loongarch64)
       .Case("dxil", dxil)
       .Case("xtensa", xtensa)
+      .Case("quagga", quagga)
       .Default(UnknownArch);
 }
 
@@ -661,6 +665,7 @@ static Triple::ArchType parseArch(StringRef ArchName) {
                   "dxilv1.9"},
                  Triple::dxil)
           .Case("xtensa", Triple::xtensa)
+          .Case("quagga", Triple::quagga)
           .Default(Triple::UnknownArch);
 
   // Some architectures require special parsing logic just to compute the
@@ -1013,6 +1018,7 @@ static Triple::ObjectFormatType getDefaultFormat(const Triple &T) {
   case Triple::ve:
   case Triple::xcore:
   case Triple::xtensa:
+  case Triple::quagga:
     return Triple::ELF;
 
   case Triple::mipsel:
@@ -1849,6 +1855,7 @@ Triple Triple::get32BitArchVariant() const {
   case Triple::x86:
   case Triple::xcore:
   case Triple::xtensa:
+  case Triple::quagga:
     // Already 32-bit.
     break;
 
@@ -1903,6 +1910,7 @@ Triple Triple::get64BitArchVariant() const {
   case Triple::tcele:
   case Triple::xcore:
   case Triple::xtensa:
+  case Triple::quagga:
     T.setArch(UnknownArch);
     break;
 
@@ -2004,6 +2012,7 @@ Triple Triple::getBigEndianArchVariant() const {
   case Triple::ve:
   case Triple::csky:
   case Triple::xtensa:
+  case Triple::quagga:
 
   // ARM is intentionally unsupported here, changing the architecture would
   // drop any arch suffixes.
@@ -2125,6 +2134,7 @@ bool Triple::isLittleEndian() const {
   case Triple::x86_64:
   case Triple::xcore:
   case Triple::xtensa:
+  case Triple::quagga:
     return true;
   default:
     return false;
@@ -2348,6 +2358,7 @@ ExceptionHandling Triple::getDefaultExceptionHandling() const {
   case Triple::systemz:
   case Triple::xcore:
   case Triple::xtensa:
+  case Triple::quagga:
     return ExceptionHandling::DwarfCFI;
   default:
     break;
